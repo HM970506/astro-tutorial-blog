@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/MarkdownPostLayout.astro
 title: "Markdown is working!"
 pubDate: 2023-04-28
 author: "mimi"

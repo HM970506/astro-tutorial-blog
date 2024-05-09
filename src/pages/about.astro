@@ -1,18 +1,9 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pageTitle = "About"
+const title="About"
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{pageTitle}</title>
-	</head>
-	<body>
-		<h1>This is about</h1>
-		
-	</body>
-</html>
+<BaseLayout title={title}>
+	<h2>slot에는 하위 콘텐츠가 들어갑니다</h2>
+</BaseLayout>

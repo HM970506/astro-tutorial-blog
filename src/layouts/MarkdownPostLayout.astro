@@ -1,0 +1,11 @@
+---
+import BaseLayout from "./BaseLayout.astro"
+
+const {frontmatter}=Astro.props
+---
+
+<BaseLayout title={frontmatter.title}>
+<p>{frontmatter.author}가 쓴 글입니다.</p>
+--------------
+<slot/>
+</BaseLayout>

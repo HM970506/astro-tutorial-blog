@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title="Blog"
+const allPosts=await Astro.glob("../pages/posts/*.md")
+//allPost를 클라 콘솔에 찍어서 보고싶은데 쉽지않구만
+---
+
+<BaseLayout title={title}>
+    
+	<ui>
+        {
+            allPosts.map((post)=>{
+                return <li><a href={post.url}>{post.frontmatter.title}</a></li>
+            })
+        }
+    </ui>
+</BaseLayout>
