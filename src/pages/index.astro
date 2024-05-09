@@ -1,4 +1,5 @@
 ---
+import Greeting from "../components/Greeting";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const pageTitle="HomePage"
@@ -6,4 +7,5 @@ const pageTitle="HomePage"
 
 <BaseLayout pageTitle={pageTitle}>
 	<h2>subtitle</h2>
+	<Greeting client:load/>
 </BaseLayout>
