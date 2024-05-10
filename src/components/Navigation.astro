@@ -1,6 +1,16 @@
 ---
+import {app} from "../firebase/server"
+import {getFirestore} from "firebase-admin/firestore"
+
+const db = getFirestore(app);
+const blogRef=db.collection("blog");
+const categoryList = []
+
+
+
 ---
 
-<a href="/">Home</a>
-<a href="/about">About</a>
-<a href="/blog">Blog</a>
+<button class="menu">menu</button>
+<div class="visible">
+   test
+</div>
