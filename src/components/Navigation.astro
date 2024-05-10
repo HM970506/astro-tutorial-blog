@@ -3,14 +3,14 @@ import {app} from "../firebase/server"
 import {getFirestore} from "firebase-admin/firestore"
 
 const db = getFirestore(app);
-const blogRef=db.collection("blog");
-const categoryList = []
-
+const categoryRef=db.collection("blog").doc("category");
+const categoryObjectList = await (await categoryRef.get()).ref.listCollections();
+const categoryList = categoryObjectList.map((collection)=>{return collection.id});
 
 
 ---
 
 <button class="menu">menu</button>
 <div class="visible">
-   test
+   {categoryList.map((category)=>{return <div>{category}</div>})}
 </div>
