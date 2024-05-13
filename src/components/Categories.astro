@@ -1,0 +1,37 @@
+---
+import {app} from "../firebase/server"
+import {getFirestore} from "firebase-admin/firestore"
+import {getStorage, getDownloadURL,} from "firebase-admin/storage"
+
+import {useStore} from "@nanostores/react"
+import {categoryObjects} from "../stores/categoryStore"
+
+const db = getFirestore(app);
+const categoryRef=db.collection("blog").doc("category");
+const categoryNameList = (await (await categoryRef.get()).ref.listCollections()).map((collection)=>{return collection.id});
+
+const storage=getStorage(app);
+const thumbnailList = await Promise.all(categoryNameList.map(async(category)=>{
+const thumbUrl=`blog/category/${category}/thumbnail.png`;
+const fileRef = storage.bucket(import.meta.env.FIREBASE_STORAGE_BUCKET).file(thumbUrl)
+const downloadURL= await getDownloadURL(fileRef);
+return downloadURL;
+}))
+
+categoryObjects.set(categoryNameList.map((category, index)=>{
+   return {name: category, thumbnail: thumbnailList[index]}
+}))
+
+const categoryObjectList = useStore(categoryObjects)
+
+---
+
+
+<div class="categories">
+   {categoryObjectList.map((category)=>{
+      const link=`/blog/category/${category.name}`
+      return <div class="categoryContainer">
+         <img src={category.thumbnail}/>
+         <a href={link}>{category}</a>
+      </div>})}
+</div>

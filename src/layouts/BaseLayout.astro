@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css'
-import Navigation from "../components/Navigation.astro"
 import Footer from "../components/Footer.astro"
 import Menu from "../components/Menu.astro"
 
@@ -16,14 +15,12 @@ const {pageTitle}=Astro.props;
 		<title>Astro</title>
 	</head>
 	<body>
+		
 		<Menu/>
-		<Navigation/>
-		<h1>{pageTitle}</h1>
+		
         <slot/>
 		<Footer text="this is footer"/>
-		<script>
-			import "../scripts/menu.js"
-		</script>
+	
 	</body>
 
 </html>
