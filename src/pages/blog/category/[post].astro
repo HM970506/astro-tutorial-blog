@@ -1,20 +1,27 @@
 ---
 import { app } from "../../../firebase/server";
 import {getFirestore} from "firebase-admin/firestore"
+import Doc from "../../../components/Doc"
 
 
-
-export const getStaticPaths = async() => {
+export const getStaticPaths = async() => { 
     const db = getFirestore(app);
 const categoryRef=db.collection("blog").doc("category");
-const categoryNameList = (await (await categoryRef.get()).ref.listCollections()).map((collection)=>{return collection.id});
-
+    const categoryNameList = (await (await categoryRef.get()).ref.listCollections()).map((collection)=>{return collection.id});
     return categoryNameList.map((category)=>{return {params:{post:category}}})
 }
 
 
 const {post} = Astro.params;
+//post에 해당하는 blog/category/{post}의 모든 문서를 list로 만들기
+
+const db = getFirestore(app);
+const postRef = db.collection("blog").doc("category").collection(post);
+const postList = (await postRef.get()).docs.map((doc)=>{return doc.data()})
 
 ---
 
-<div>test: {post}</div>
+<h1>{post}</h1>
+<ul>
+ <Doc category={post} postList={postList} client:load/>
+</ul>
