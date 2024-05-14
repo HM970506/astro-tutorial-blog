@@ -1,8 +1,16 @@
 ---
-export const getStaticPaths = (() => {
-    
-    return [];
-})
+import { app } from "../../../firebase/server";
+import {getFirestore} from "firebase-admin/firestore"
+
+
+
+export const getStaticPaths = async() => {
+    const db = getFirestore(app);
+const categoryRef=db.collection("blog").doc("category");
+const categoryNameList = (await (await categoryRef.get()).ref.listCollections()).map((collection)=>{return collection.id});
+
+    return categoryNameList.map((category)=>{return {params:{post:category}}})
+}
 
 
 const {post} = Astro.params;
