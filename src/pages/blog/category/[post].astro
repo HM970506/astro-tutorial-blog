@@ -2,6 +2,7 @@
 import { app } from "../../../firebase/server";
 import {getFirestore} from "firebase-admin/firestore"
 import Doc from "../../../components/Doc"
+import BaseLayout from "../../../layouts/BaseLayout.astro";
 
 
 export const getStaticPaths = async() => { 
@@ -21,7 +22,9 @@ const postList = (await postRef.get()).docs.map((doc)=>{return doc.data()})
 
 ---
 
+<BaseLayout page>
 <h1>{post}</h1>
 <ul>
- <Doc category={post} postList={postList} client:load/>
+ <Doc postList={postList} client:load/>
 </ul>
+</BaseLayout>

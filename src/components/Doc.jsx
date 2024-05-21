@@ -1,23 +1,13 @@
 import { useState, useEffect } from "react";
-import { getDownloadURL, getStorage } from "firebase/storage";
+import { marked } from "marked";
 
-export default function Doc({ category, postList }) {
+export default function Doc({ postList }) {
   const [nowPostData, setNowPostData] = useState(postList[0]);
-  const storage = getStorage();
 
   useEffect(() => {
-    getText();
+    const test = marked.parse(nowPostData?.text);
+    console.log("test", test);
   }, [nowPostData]);
-
-  const getText = async () => {
-    const pathReference = ref(
-      storage,
-      `blog/category/${category}/${nowPostData.id}`
-    );
-    const url = await getDownloadURL(pathReference);
-    const text = (await fetch(url)).text();
-    console.log(text);
-  };
 
   return (
     <div>
@@ -28,6 +18,7 @@ export default function Doc({ category, postList }) {
               onClick={() => {
                 setNowPostData(post);
               }}
+              key={post.id}
             >
               {post.title}
             </li>
@@ -36,14 +27,10 @@ export default function Doc({ category, postList }) {
       </ul>
 
       <div>
-        <h2>
-          {
-            postList.find((post) => {
-              return post.id === nowPostData.id;
-            })?.title
-          }
-        </h2>
+        <h2>{nowPostData?.title}</h2>
       </div>
+
+      <div>{marked(nowPostData?.text)}</div>
     </div>
   );
 }
